@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7 no-js" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8 no-js" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en" class="no-js" style="overflow-x: hidden;">
+<head>
+	<!-- Basic need -->
+	<title>Open Pediatrics</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+	<link rel="profile" href="#">
+
+    <!--Google Font-->
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500' />
+	<link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,600'/>
+	<!-- Mobile specific meta -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone-no">
+
+	<!-- CSS files -->
+	<link rel="stylesheet" href="/css/plugins.css">
+	<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="/images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+
+
+<!-- BEGIN | Header -->
+<%- include('partials/_navigationrl') -%>
+<!-- END | Header -->
+
+<div class="hero common-hero1">
+    <div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1> Add a New Star </h1>
+                    <br><br>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="page-single-r row">
+    <div class="col-md-3 col-xs-0"></div>
+    <form method="POST" action="/stars/edit/<%= star.id %>" class="col-xs-12 col-md-6 addstarform">
+        <div class="col-xs-6">
+             <label  for="firstName">
+                First Name*
+                <input value="<%= star.firstName %>" type="text" name="firstName" id="firstName" placeholder="First Name" required="required" />
+            </label>
+        </div>
+        <div class="col-xs-6">
+            <label for="lastName">
+               Last Name*
+               <input value="<%= star.lastName %>" type="text" name="lastName" id="lastName" placeholder="Last Name" required="required" />
+           </label>
+       </div>
+
+        <div class="col-xs-12">
+            <label for="info">
+                Star Infos
+                <textarea value="<%= star.info %>" name="info" id="info" placeholder="Give some information about the star" cols="50" style="resize: none; height: 86px; margin-top: 8px;" ></textarea>
+            </label>
+        </div>
+
+        <div class="col-xs-12">
+            <label for="movies">
+                Movies
+               <input value="<%= star.movies %>" type="text" name="movies" id="movies" placeholder="Movies, seperated with comma"/>
+           </label>
+       </div>
+
+       <div class="col-xs-12">
+            <label for="photoLink">
+                Star Photo
+            <input type="url" value="<%= star.photo %>" name="photoLink" id="photoLink" placeholder="You can give your star's photo url"/>
+            </label>
+        </div>
+        <div class="col-xs-12">
+            <% if(errors !== " ") { %>
+                <% errors.forEach(item => { %>
+                    <div class="alert alert-danger">
+                        <%- item %>
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
+
+        <div class="col-xs-12">
+             <% if(success != "") { %>
+            <div class="alert alert-success" role="alert">
+                Star updated successfuly;
+            </div>  
+            <% } %>
+        </div>
+        
+       <div class="col-xs-12">
+         <button type="submit">Add Star</button>
+       </div>
+    </form>
+</div>
+
+<%- include('partials/_footer') -%>
+
+
+<script src="/js/jquery.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/plugins2.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

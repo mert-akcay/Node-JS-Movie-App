@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7 no-js" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8 no-js" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en" class="no-js" style="overflow-x: hidden;">
+<head>
+	<!-- Basic need -->
+	<title>Open Pediatrics</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+	<link rel="profile" href="#">
+
+    <!--Google Font-->
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500' />
+	<link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,600'/>
+	<!-- Mobile specific meta -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone-no">
+
+	<!-- CSS files -->
+	<link rel="stylesheet" href="/css/plugins.css">
+	<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="/images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+
+
+<!-- BEGIN | Header -->
+<%- include('partials/_navigationrl') -%>
+<!-- END | Header -->
+
+<div class="hero common-hero1">
+    <div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1> EDIT MOVIE </h1>
+                    <br><br>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="page-single-r row">
+    <div class="col-md-4 col-xs-1"></div>
+    <form method="POST" action="/movies/edit/<%= movie.id %>" class="col-xs-10 col-md-4 addstarform">
+        <div class="row">
+             <label for="title">
+                Movie Title*
+                <input type="text" value="<%= movie.title %>" name="title" id="title" placeholder="Movie Title" required="required" />
+            </label>
+        </div>
+
+        <div class="row">
+            <label for="description">
+                Movie Description*
+                <textarea name="description" id="description" placeholder="Your movie's description" cols="50" style="resize: none; height: 86px; margin-top: 8px;" ><%= movie.description %></textarea>
+            </label>
+        </div>
+
+        <div class="row">
+            <label for="actor">
+                Actors
+               <input value="<%= movie.actors %>" type="text" name="actors" id="actor" placeholder="Actors, seperated with a comma"/>
+           </label>
+       </div>
+
+       <div class="row">
+            <label for="photoLink">
+                Poster of Movie
+            <input value="<%= movie.photo %>" type="url" name="photoLink" id="photoLink" placeholder="You can give a poster url"/>
+            </label>
+        </div>
+        <div>
+            <% if(errors !== " ") { %>
+                <% errors.forEach(function(item) { %>
+                    <div class="alert alert-danger">
+                        <%- item %>
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
+
+        <div>
+            <% if(success != "") { %>
+            <div class="alert alert-success" role="alert">
+                The movie is successfuly updated.
+            </div>  
+            <% } %>
+        </div>
+       <div class="row">
+         <button type="submit">Update Movie</button>
+       </div>
+    </form>
+</div>
+
+<%- include('partials/_footer') -%>
+
+
+<script src="/js/jquery.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/plugins2.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

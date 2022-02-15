@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7 no-js" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8 no-js" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en" class="no-js">
+<head>
+	<!-- Basic need -->
+	<title>Open Pediatrics</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+	<link rel="profile" href="#">
+
+    <!--Google Font-->
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+	<!-- Mobile specific meta -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone-no">
+
+	<!-- CSS files -->
+	<link rel="stylesheet" href="/css/plugins.css">
+	<link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="/images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+
+<!-- BEGIN | Header -->
+<%- include('partials/_navigation') %>
+<!-- END | Header -->
+
+<% ddata = 'sharestar'; %>
+<%- include('partials/_confirmationModal') %>
+
+
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1> Stars List</h1>
+					<p>All Shared Stars</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- celebrity list section-->
+<div class="page-single">
+	<div class="container">
+		<div class="row ipad-width2">
+			<div style="min-height: 230px;" class="col-xs-12">
+				<div class="topbar-filter">
+					<p class="pad-change">Found <span><%= stars[1] %></span> in total</p>
+				</div>
+				<div class="row">
+					<% stars[0].forEach(star => { %>
+					<div class="col-md-12">
+						<div class="ceb-item-style-2">
+							<a href="/stars/<%= star.id %>">
+								<img style="height: 250px; width: 175px;" src="<%= star.photo || '/images/uploads/defaultstar.png' %>" alt="">
+							</a>
+							<div class="ceb-infor">
+								<h2><a href="/stars/<%= star.id %>"><%= star.firstName %> <%= star.lastName %></a></h2>
+								<p style="padding-bottom: 60px;"><%= star.info %> </p>
+								<div class="shared-by">
+									<p>Shared by <%= user.id != star.user.id ? `${star.user.firstName} ${star.user.lastName}` : 'You' %><p>
+								</div>
+								<div class="share-star-btn">
+									<% if(user.id == star.user.id) { %>
+									<button class="share-btn <%= star.public == true && 'shared' %>"  data-whatever="<%= star.id %>" data-toggle="modal" data-target="#exampleModal"><%= star.public == true ? 'Shared' : 'Share' %></button>
+									<% } %>
+									<button data-whatever="<%= star.id %>" class="interact-btn starlike <%= (likes.includes(star.id)) ? 'liked' : 'like' %>"><i class="ion-heart"></i> <%= (likes.includes(star.id)) ? 'Liked' : 'Like' %> </button>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<% }) %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of celebrity list section-->
+
+<!-- footer section-->
+<%- include('partials/_footer') -%>
+<!-- end of footer section-->
+
+
+<script src="/js/jquery.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/plugins2.js"></script>
+<script src="/js/custombt.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7 no-js" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8 no-js" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en" class="no-js">
+<head>
+	<!-- Basic need -->
+	<title>Open Pediatrics</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+	<link rel="profile" href="#">
+
+    <!--Google Font-->
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+	<!-- Mobile specific meta -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone-no">
+
+	<!-- CSS files -->
+	<link rel="stylesheet" href="/css/plugins.css">
+	<link rel="stylesheet" href="/css/style.css">
+
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</head>
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+
+
+<!-- BEGIN | Header -->
+<%- include('partials/_navigation') %>
+<!-- END | Header -->
+
+<div class="hero mv-single-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single movie-single movie_single">
+	<div class="container">
+		<div class="row ipad-width2">
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<div class="movie-img">
+					<img style="width: 340px;height: 521px;" src="<%= movie.photo || '/images/uploads/defaultmovie.jpg' %>" alt="">
+					<div class="movie-btn">	
+						<div class="btn-transform transform-vertical">
+							<div><a data-whatever="<%= movie.id %>" class="likebtn item item-1 <%= liked ? 'reddbtn':'yellowbtn' %>"> <i class="ion-heart"></i> <%= liked ? 'Liked':'Like' %> </a></div>
+							<div><a data-whatever="<%= movie.id %>" class="likebtn item item-2 <%= liked ? 'reddbtn':'yellowbtn' %>"><i class="ion-heart"></i></a></div>
+						</div>
+						<div style="margin-top: 10px;" class="btn-transform ">
+							<div><a data-whatever="<%= movie.id %>" class=" item item-1 greenbtn">Shared by <%= movie.user.firstName %> <%= movie.user.lastName %> </a></div>
+							
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div class="col-md-8 col-sm-12 col-xs-12">
+				<div class="movie-single-ct main-content">
+					<h1 class="bd-hd"><%= movie.title %> </h1>
+					<div class="movie-tabs">
+						<div class="tabs">
+							<ul class="tab-links tabs-mv">
+								<li class="active"><a href="#overview">Overview</a></li>
+								<li><a href="#reviews"> Reviews</a></li>                
+							</ul>
+						    <div class="tab-content">
+								<!-- OVERVIEW START -->
+						        <div id="overview" class="tab active">
+						            <div class="row">
+						            	<div class="col-md-11 col-sm-12 col-xs-12">
+						            		<p><%= movie.description %>  </p>
+
+											<!-- Likes -->
+											<div class="title-hd-sm">
+												<p><%= likesCount %> Likes Total</p>
+											</div>
+											<!-- Reviews -->
+											<div class="title-hd-sm">
+												<p><%= reviews[1] %> reviews total</p>
+											</div>
+
+											
+											<!-- movie cast -->
+											<% if(movie.stars != '') { %>
+											<div class="title-hd-sm">
+												<h4>cast</h4>
+											</div>
+											<% movie.actors.split(',').forEach(actor => { %>
+											<div class="mvcast-item">											
+												<div class="cast-it">
+													<div class="cast-left">
+														<img src="/images/uploads/cast1.jpg" alt="">
+														<a><%= actor %></a>
+													</div>
+												</div>
+											</div>
+											<% })} %>
+											
+											
+
+											<div class="title-hd-sm">
+												<h4>Review</h4>
+
+											</div>
+											<!-- movie user review -->
+											
+											<% if(reviews[0].length != 0) { %>
+											<div class="mv-user-review-item">
+												<h3><%= reviews[0][0].title %></h3>
+												<p class="time">
+													<%= reviews[0][0].title %> by <a > <%= reviews[0][0].user.firstName %> <%= reviews[0][0].user.lastName %></a>
+												</p>
+												<p><%= reviews[0][0].review %></p>
+											</div>
+											<% }else{ %>
+											<div class="mv-user-review-item">
+												There is no comment right now
+											</div>
+											<% } %>
+											
+						            	</div>
+
+						            </div>
+						        </div>
+								<!-- OVERVIEW END -->
+
+								<!-- REVIEWS START -->
+						        <div id="reviews" class="tab review">
+						           <div class="row">
+						            	<div class="rv-hd" style="margin-bottom: 7%;">
+											<form class="doreview col-xs-12 row " action="/movies/review" method="POST">
+												<div class="col-md-9 col-xs-12">
+													<div>
+														<label for="title">
+															<p style="font-size: 18px; font-weight:bolder; color: white;">Review Title*</p>
+															<input type="text" minlength="5" name="title" id="title" placeholder="Review content" required="required" />
+														</label>
+													</div>
+													<div>
+														<label style="padding-top: 14px;" for="review">
+															<p style="font-size: 18px; font-weight:bolder; color: white;">Review*</p>
+															<textarea name="review" minlength="10" id="review" placeholder="Do a review" cols="50" style="resize: none; height: 86px;" ></textarea>
+														</label>
+													</div>
+												</div>
+												<button type="submit" class="redbtn col-xs-12 col-md-3">Write Review</button>
+											</form>
+						            	</div>
+										<% if(reviews[0].length != 0) { %>
+						            	<div style="margin-top: 20px; margin-bottom: 10px;" class="topbar-filter">
+											<p style="font-size: large;">All reviews</p>
+											<p>Found <span><%= reviews[1] %> reviews</span> in total</p>
+										</div>
+										<% reviews[0].forEach( review => { %>
+										<div class="mv-user-review-item">
+											<div class="user-infor">
+												<img src="<%= review.user.photo || '/images/uploads/cast1.jpg'%>" alt="">
+												<div class="user-infor-cont">
+													<h3><%= review.title %></h3>
+													<p class="time">
+														<%= review.createdAt %> by <a ><%= review.user.firstName %> <%= review.user.lastName %></a>
+													</p>
+												</div>
+											</div>
+											<p><%= review.review %></p>
+										</div>
+										<% })}else{  %>
+										<div>
+											<h2>There is no review right now. Do you want to be first?</h2>
+										</div>
+										<% } %>
+						            </div>
+						        </div>
+								<!-- REVIEWS END -->
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- footer section-->
+<%- include('partials/_footer') -%>
+<!-- end of footer section-->
+
+<script src="/js/jquery.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/plugins2.js"></script>
+<script src="/js/custombt.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

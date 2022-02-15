@@ -1,0 +1,22 @@
+<div class="col-md-3 col-sm-12 col-xs-12">
+    <div class="user-information">
+        <div class="user-img">
+            <a href="/profile"><img src="<%= user.photo || '/images/uploads/defaultuser.png' %>" alt=""><br></a>
+            <a href="/profile" class="redbtn"><%= user.firstName %> <%= user.lastName %> </a>
+        </div>
+        <div class="user-fav">
+            <p>Account Details</p>
+            <ul>
+                <li  class="<%= index === 0 && 'active' %>"><a href="/profile">Profile</a></li>
+                <li  class="<%= index === 1 && 'active' %>"><a href="/profile/movies">Movies</a></li>
+                <li  class="<%= index === 2 && 'active' %>"><a href="/profile/stars">Stars</a></li>
+            </ul>
+        </div>
+        <div class="user-fav">
+            <p>Others</p>
+            <ul>
+                <li><a href="/sign-out">Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

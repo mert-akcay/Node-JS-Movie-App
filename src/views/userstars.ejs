@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7 no-js" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8 no-js" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en" class="no-js">
+<head>
+	<!-- Basic need -->
+	<title>Open Pediatrics</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+	<link rel="profile" href="#">
+
+    <!--Google Font-->
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+	<!-- Mobile specific meta -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone-no">
+
+	<!-- CSS files -->
+	<link rel="stylesheet" href="/css/plugins.css">
+	<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="/images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+
+
+<!-- BEGIN | Header -->
+<%- include('partials/_navigation') %>
+<!-- END | Header -->
+
+
+<% ddata = 'sharestar'; %>
+<%- include('partials/_confirmationModal') %>
+
+<div class="modal modalss" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Are you sure?</h5>
+      </div>
+      <div class="modal-body">
+        This action will delete this post
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary dismiss" data-dismiss="modal">Close</button>
+		<form style="display: inline;" method="POST" action="/stars/delete">
+			<button type="submit" class="btn btn-primary delete"> Delete </button>
+			<input type="hidden" name="id" id="delete-inf">
+		</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hero user-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1 style="text-align: left; margin-left: 25.5%;"><%=user.firstName%> <%= user.lastName %>’s profile</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="#">Home</a></li>
+						<li> <span class="ion-ios-arrow-right"></span>Favorite movies</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single userfav_list">
+	<div class="container">
+		<div class="row ipad-width2">
+			<%- include('partials/_leftmenu') %>
+			<div class="col-md-9 col-sm-12 col-xs-12">
+				<div class="flex-wrap-movielist user-fav-list row">
+					<% if(stars[0].length != 0) { %>
+					<% stars[0].forEach(star => { %>
+					<div class="col-md-12">
+						<div class="ceb-item-style-2">
+							<a href="/stars/<%= star.id %>">
+								<img style="height: 250px; width: 175px;" src="<%= star.photo || '/images/uploads/defaultstar.png' %>" alt="">
+							</a>
+							<div class="ceb-infor">
+								<h2><a href="/stars/<%= star.id %>"><%= star.firstName %> <%= star.lastName %></a></h2>
+								<p><%= star.info %> </p>
+								<div class="share-star-btn">
+									<button class="share-btn <%= star.public == true && 'shared' %>" style="margin-top: 10px;" data-whatever="<%= star.id %>" data-toggle="modal" data-target="#exampleModal"><%= star.public == true ? 'Shared' : 'Share' %></button>
+									<a href="/stars/edit/<%= star.id %>"><button class="edit-btn">Edit</button></a>
+									<button class="delete-btn" data-id="<%= star.id %>" data-toggle="modal" data-target="#deleteModal">Delete</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<% })}else{ %>
+					<div class="col-md-12 notadd">
+						<h4>You have not added any star. <a href="/stars/add">Do you want to try?</a></h4>
+					</div>
+					<% } %>
+				</div>		
+			</div>
+		</div>
+	</div>
+</div>
+<!-- footer section-->
+<%- include('partials/_footer') -%>
+<!-- end of footer section-->
+
+<script src="/js/jquery.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/plugins2.js"></script>
+<script src="/js/custombt.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

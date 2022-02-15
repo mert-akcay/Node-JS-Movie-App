@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7 no-js" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8 no-js" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en" class="no-js">
+<head>
+	<!-- Basic need -->
+	<title>Open Pediatrics</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+	<link rel="profile" href="#">
+
+    <!--Google Font-->
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500' />
+	<link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,600'/>
+	<!-- Mobile specific meta -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone-no">
+
+	<!-- CSS files -->
+	<link rel="stylesheet" href="/css/plugins.css">
+	<link rel="stylesheet" href="/css/style.css">
+
+
+</head>
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="/images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+
+
+<!-- BEGIN | Header -->
+<%- include('partials/_navigation') %>
+<!-- END | Header -->
+
+<% ddata = 'share'; %>
+<%- include('partials/_confirmationModal') %>
+
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1> Movie List</h1>
+					<p>All Shared Movies</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single movie_list">
+	<div class="container">
+		<div class="row ipad-width2">
+			<div style="min-height: 230px;" class="col-xs-12">
+				<div class="topbar-filter">
+					<p>Found <span><%= movies[1] %> movies</span> in total</p>
+				</div>
+
+				<% movies[0].forEach(movie => { %>
+					<div class="movie-item-style-2 col-xs-12 row" >
+						<a href="/movies/<%= movie.id %>"><img style="width: 170px; height: 261px;" src="<%= movie.photo || '/images/uploads/defaultmovie.jpg' %>" alt=""></a>
+						<div class="mv-item-infor col-md-10">
+							<h5><a href="/movies/<%= movie.id %>"><%= movie.title %></a></h5>
+							<p class="infoD"><%= movie.description %></p>
+							<p class="infoD">Stars: <%= movie.actors %></p>
+							<div class="row">
+								<div style="margin-top: -10px;" class="col-md-3">
+									<p>Shared by <%= user.id != movie.user.id ? `${movie.user.firstName} ${movie.user.lastName}` : 'You' %></p>
+								</div>
+								<div class="col-md-9" style="display: inline; text-align: right;">
+									<% if(user.id == movie.user.id) { %>
+										<button class="share-btn <%= movie.public && 'shared' %>" data-whatever="<%= movie.id %>" data-toggle="modal" data-target="#exampleModal"><%= movie.public ? 'Shared':'Share' %></button>
+									<% } %>
+									<button class="interact-btn movielike <%= (likes.includes(movie.id)) ? 'liked' : 'like' %>" data-whatever="<%= movie.id %>"""><i class="ion-heart"></i> <%= (likes.includes(movie.id)) ? 'Liked' : 'Like' %></button>
+									<a href="/movies/<%= movie.id %>">
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				<% }) %>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<!-- footer section-->
+<%- include('partials/_footer') -%>
+<!-- end of footer section-->
+
+<script src="/js/jquery.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/plugins2.js"></script>
+<script src="/js/custombt.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>
